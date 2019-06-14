@@ -1,11 +1,12 @@
-[![Travis](https://img.shields.io/travis/Microsoft/tsyringe.svg)](https://travis-ci.org/Microsoft/tsyringe/)
-[![npm](https://img.shields.io/npm/v/tsyringe.svg)](https://www.npmjs.com/package/tsyringe)
-[![npm](https://img.shields.io/npm/dt/tsyringe.svg)](https://www.npmjs.com/package/tsyringe)
+[![Travis](https://img.shields.io/travis/skiptirengu/tsyringex.svg)](https://travis-ci.org/skiptirengu/tsyringex/)
 
-# TSyringe
+# TSyringex - NOT PUBLISHED YET
 
-A lightweight dependency injection container for TypeScript/JavaScript for
-constructor injection.
+A dependency injection container for TypeScript/JavaScript.
+
+This is a fork of the original [tsyringe](https://github.com/microsoft/tsyringe) project,
+and aims add some useful features like scoped dependency lifetime and multi injection.
+Keep in mind that this version can, and probably will, be incompatible with the original tsyringe at some point.
 
 - [Installation](#installation)
 - [API](#api)
@@ -18,16 +19,16 @@ constructor injection.
 
 ## Installation
 
-Install by `npm`
+Install with `npm`
 
 ```sh
-npm install --save tsyringe
+npm install --save tsyringex
 ```
 
-**or** install with `yarn` (this project is developed using `yarn`)
+**or** install with `yarn`
 
 ```sh
-yarn add tsyringe
+yarn add tsyringex
 ```
 
 Modify your `tsconfig.json` to include the following settings
@@ -47,7 +48,7 @@ Add a polyfill for the Reflect API (examples below use reflect-metadata). You ca
 - [core-js (core-js/es7/reflect)](https://www.npmjs.com/package/core-js)
 - [reflection](https://www.npmjs.com/package/@abraham/reflection)
 
-The Reflect polyfill import should only be added once, and before before DI is used:
+The Reflect polyfill import should only be added once, and before DI is used:
 
 ```typescript
 // main.ts
@@ -66,7 +67,7 @@ runtime.
 #### Usage
 
 ```typescript
-import {injectable} from "tsyringe";
+import {injectable} from "tsyringex";
 
 @injectable()
 class Foo {
@@ -75,7 +76,7 @@ class Foo {
 
 // some other file
 import "reflect-metadata";
-import {container} from "tsyringe";
+import {container} from "tsyringex";
 import {Foo} from "./foo";
 
 const instance = container.resolve(Foo);
@@ -89,7 +90,7 @@ global container.
 #### Usage
 
 ```typescript
-import {singleton} from "tsyringe";
+import {singleton} from "tsyringex";
 
 @singleton()
 class Foo {
@@ -98,7 +99,7 @@ class Foo {
 
 // some other file
 import "reflect-metadata";
-import {container} from "tsyringe";
+import {container} from "tsyringex";
 import {Foo} from "./foo";
 
 const instance = container.resolve(Foo);
@@ -106,7 +107,7 @@ const instance = container.resolve(Foo);
 
 ### autoInjectable()
 
-Class decorator factory that replaces the decorated class' constructor with
+Class decorator factory that replaces the decorated class constructor with
 a parameterless constructor that has dependencies auto-resolved.
 
 **Note** Resolution is performed using the global container
@@ -114,7 +115,7 @@ a parameterless constructor that has dependencies auto-resolved.
 #### Usage
 
 ```typescript
-import {autoInjectable} from "tsyringe";
+import {autoInjectable} from "tsyringex";
 
 @autoInjectable()
 class Foo {
@@ -127,7 +128,7 @@ import {Foo} from "./foo";
 const instance = new Foo();
 ```
 
-Notice how in order to allow the use of the empty constructor `new Foo()`, we
+Notice that in order to allow the use of the empty constructor `new Foo()`, we
 need to make the parameters optional, e.g. `database?: Database`
 
 ### inject()
@@ -138,7 +139,7 @@ information to be stored in the constructor's metadata
 #### Usage
 
 ```typescript
-import {injectable, inject} from "tsyringe";
+import {injectable, inject} from "tsyringex";
 
 interface Database {
   // ...
@@ -165,7 +166,7 @@ export class Foo {}
 ```typescript
 // Bar.ts
 import {Foo} from "./Foo";
-import {injectable} from "tsyringe";
+import {injectable} from "tsyringex";
 
 @injectable()
 export class Bar {
@@ -176,7 +177,7 @@ export class Bar {
 ```typescript
 // main.ts
 import "reflect-metadata";
-import {container} from "tsyringe";
+import {container} from "tsyringex";
 import {Bar} from "./Bar";
 
 const myBar = container.resolve(Bar);
@@ -205,7 +206,7 @@ export class TestService implements SuperService {
 
 ```typescript
 // Client.ts
-import {injectable, inject} from "tsyringe";
+import {injectable, inject} from "tsyringex";
 
 @injectable()
 export class Client {
@@ -218,7 +219,7 @@ export class Client {
 import "reflect-metadata";
 import {Client} from "./Client";
 import {TestService} from "./TestService";
-import {container} from "tsyringe";
+import {container} from "tsyringex";
 
 container.register("SuperService", {
   useClass: TestService
@@ -227,17 +228,3 @@ container.register("SuperService", {
 const client = container.resolve(Client);
 // client's dependencies will have been resolved
 ```
-
-## Contributing
-
-This project welcomes contributions and suggestions. Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit [https://cla.microsoft.com](https://cla.microsoft.com).
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

@@ -1,7 +1,7 @@
 {
-  "name": "tsyringe",
-  "version": "3.2.0",
-  "description": "Lightweight dependency injection container for JavaScript/TypeScript",
+  "name": "tsyringex",
+  "version": "1.0.0",
+  "description": "A dependency injection container for TypeScript/JavaScript.",
   "main": "dist/cjs/index.js",
   "module": "./dist/esm5/index.js",
   "es2015": "./dist/esm2015/index.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Microsoft/tsyringe.git"
+    "url": "git+https://github.com/skiptirengu/tsyringex.git"
   },
   "keywords": [
     "dependency injection",
@@ -36,9 +36,9 @@
   "author": "Steven Hobson-Campbell",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Microsoft/tsyringe/issues"
+    "url": "https://github.com/skiptirengu/tsyringex/issues"
   },
-  "homepage": "https://github.com/Microsoft/tsyringe#readme",
+  "homepage": "https://github.com/skiptirengu/tsyringex#readme",
   "dependencies": {
     "tslib": "^1.9.3"
   },
