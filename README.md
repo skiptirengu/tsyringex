@@ -1,8 +1,9 @@
-[![Travis](https://img.shields.io/travis/skiptirengu/tsyringex.svg)](https://travis-ci.org/skiptirengu/tsyringex/)
-
 # TSyringex - NOT PUBLISHED YET
 
 A dependency injection container for TypeScript/JavaScript.
+
+[![Travis](https://img.shields.io/travis/skiptirengu/tsyringex.svg)](https://travis-ci.org/skiptirengu/tsyringex/)
+[![codecov](https://codecov.io/gh/skiptirengu/tsyringex/branch/master/graph/badge.svg)](https://codecov.io/gh/skiptirengu/tsyringex)
 
 This is a fork of the original [tsyringe](https://github.com/microsoft/tsyringe) project,
 and aims add some useful features like scoped dependency lifetime and multi injection.
