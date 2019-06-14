@@ -28,7 +28,7 @@ export const typeInfo = new Map<constructor<any>, any[]>();
 class InternalDependencyContainer implements DependencyContainer {
   protected _registry = new Registry();
   /**
-   * Wether this container is within a scope
+   * Whether this container is within a scope
    */
   public readonly scoped: boolean = false;
 
