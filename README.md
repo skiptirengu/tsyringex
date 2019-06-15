@@ -12,10 +12,12 @@ Keep in mind that this version can, and probably will, be incompatible with the 
 - [API](#api)
   - [injectable()](#injectable)
   - [singleton()](#singleton)
+  - [scoped()](#scoped)
   - [autoInjectable()](#autoinjectable)
   - [inject()](#inject)
+  - [injectAll()](#injectAll)
+- [Scoped container](#scoped-container)
 - [Full Examples](#full-examples)
-- [Contributing](#contributing)
 
 ## Installation
 
@@ -105,6 +107,29 @@ import {Foo} from "./foo";
 const instance = container.resolve(Foo);
 ```
 
+### scoped()
+
+Class decorator factory that registers the class as a scoped dependency within the
+global container.
+
+#### Usage
+
+```typescript
+import {scoped} from "tsyringex";
+
+@scoped()
+class Foo {
+  constructor() {}
+}
+
+// some other file
+import "reflect-metadata";
+import {container} from "tsyringex";
+import {Foo} from "./foo";
+
+const instance = container.createScope().resolve(Foo);
+```
+
 ### autoInjectable()
 
 Class decorator factory that replaces the decorated class constructor with
@@ -149,6 +174,62 @@ interface Database {
 class Foo {
   constructor(@inject("Database") private database?: Database) {}
 }
+```
+
+### injectAll()
+
+Parameter decorator factory that allows for interface and other non-class
+information to be stored in the constructor's metadata, when injecting 
+multiple dependencies.
+
+#### Usage
+
+```typescript
+import {injectable, injectAll} from "tsyringex";
+
+interface Bar {
+  // ...
+}
+
+@injectable()
+class Foo {
+  constructor(@injectAll("Bar") private bar?: Bar[]) {}
+}
+```
+## Scoped container
+
+The container will treat scoped dependencies as following:
+  + Resolving the dependency from the global container or a child container:
+    + The dependency will be treated as transient (a new instance will be created every time the `resolve()` method is invoked).
+  + Resolving the dependency from a scoped container created from `createScope()` method:
+    + The dependency will be treated as singleton (one instance will be created and cached for the container's lifetime).
+
+```typescript
+// SuperService.ts
+export class ScopedService {
+  // ...
+}
+```
+
+```typescript
+// main.ts
+import "reflect-metadata";
+import {ScopedService} from "./ScopedService";
+import {container} from "tsyringex";
+
+container.registerScoped(ScopedService, ScopedService);
+
+const scope = container.createScope();
+
+const globalService = container.resolve(ScopedService);
+const scopedService = scope.resolve(ScopedService);
+
+// Outputs false, as the two "ScopedService" 
+// instances are not the same object
+console.log(globalService === scopedService);
+// Outputs true, since the "ScopedService" instance
+// is cached within the scoped container
+console.log(scopedService === scope.resolve(ScopedService));
 ```
 
 ## Full examples
