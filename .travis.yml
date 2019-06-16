@@ -23,6 +23,7 @@ jobs:
       node_js: "12"
       script: "npm run build"
       deploy:
+        skip_cleanup: true
         provider: npm
         email: thiago_ogt@outlook.com
         api_key:
