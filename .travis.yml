@@ -16,12 +16,17 @@ script:
 after_success:
   - codecov -f coverage/*.json
 
-before_deploy: "npm run build"
-deploy:
-  provider: npm
-  email: thiago_ogt@outlook.com
-  api_key:
-    secure: pwCbzuP73fk1UL9eriGlOV/y2C0EVpp1pzhUSiJLOoJcV0LIYJTcD46zznOhUzhXxcMpuVoNCQPaLj+sKwsC7cXMN30S6a8NTmmz8YQjx8TYXczX2xqdx3PcNZID3Nfb5ZRuby+uMB+5HA6rlyXPDdHzoVuOdVGvZMGjO2VNtsN8fzyEMqWZdNcgq+u7ldpaNDu6OuNnsBU3L6BFIvTwjfX//eOSceQ2TFCHrJKmxIgn2QOHujj2u8Z5DdTiu4+Fo8WsVWBz/q08ImE5pUI/KjYnjlrBIdpnRZfVFjSQS8/pNNhht0MF1RAfN2UcliY+ASkWo2P6htqL7GfgRFDrJ+Az8LA3aMQjzU8mb4yR7YG4RzzKv8Avzq4WcgWZa9yRidTsmZAqRoOWzx4ok5EQfqJ6kfRfdGH+gjrdnIGd58yM66ItGifcAUAXTj+ct4Tm9+hKv+UFZEx/CfDykyjLQoJdGwSddW+SIOB2I38vbViVZMuQPDf99XYod9iJIbuOVnSAtGLNXtkktRiRmgaVJtZJAGvmtZlGy5wuhla4PPYb3IlkFc6YnhVDg39Cwx1Q3m2J9G6F4kJz12JN1VsMoxivZW5gNkfzIADQ1HUK1/6iV7iL7xzD9YdffUGqCvFf1JL+YP/4uQ1gyec2fBiUHD5N4y+JuYezFl8sBU6JiUQ=
-  on:
-    tags: true
-    repo: skiptirengu/tsyringex
+jobs:
+  include:
+    - stage: npm release
+      if: tag IS present
+      node_js: "12"
+      script: "npm run build"
+      deploy:
+        provider: npm
+        email: thiago_ogt@outlook.com
+        api_key:
+          secure: pwCbzuP73fk1UL9eriGlOV/y2C0EVpp1pzhUSiJLOoJcV0LIYJTcD46zznOhUzhXxcMpuVoNCQPaLj+sKwsC7cXMN30S6a8NTmmz8YQjx8TYXczX2xqdx3PcNZID3Nfb5ZRuby+uMB+5HA6rlyXPDdHzoVuOdVGvZMGjO2VNtsN8fzyEMqWZdNcgq+u7ldpaNDu6OuNnsBU3L6BFIvTwjfX//eOSceQ2TFCHrJKmxIgn2QOHujj2u8Z5DdTiu4+Fo8WsVWBz/q08ImE5pUI/KjYnjlrBIdpnRZfVFjSQS8/pNNhht0MF1RAfN2UcliY+ASkWo2P6htqL7GfgRFDrJ+Az8LA3aMQjzU8mb4yR7YG4RzzKv8Avzq4WcgWZa9yRidTsmZAqRoOWzx4ok5EQfqJ6kfRfdGH+gjrdnIGd58yM66ItGifcAUAXTj+ct4Tm9+hKv+UFZEx/CfDykyjLQoJdGwSddW+SIOB2I38vbViVZMuQPDf99XYod9iJIbuOVnSAtGLNXtkktRiRmgaVJtZJAGvmtZlGy5wuhla4PPYb3IlkFc6YnhVDg39Cwx1Q3m2J9G6F4kJz12JN1VsMoxivZW5gNkfzIADQ1HUK1/6iV7iL7xzD9YdffUGqCvFf1JL+YP/4uQ1gyec2fBiUHD5N4y+JuYezFl8sBU6JiUQ=
+        on:
+          tags: true
+          repo: skiptirengu/tsyringex
