@@ -1,6 +1,6 @@
 {
   "name": "tsyringex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An improved version of TSyringe, a dependency injection container for JavaScript/TypeScript.",
   "main": "dist/cjs/index.js",
   "module": "./dist/esm5/index.js",
